@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect('mongodb://localhost/stock_tracker', {
+mongoose.connect('mongodb+srv://kartikkulshreshtha2507:kartikkulshreshtha@cluster0.rrwzcse.mongodb.net/stock_tracker', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
