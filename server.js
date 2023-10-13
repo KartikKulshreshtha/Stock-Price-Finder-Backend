@@ -26,24 +26,28 @@ const StockSchema = new Schema({
 const Stock = mongoose.model("Stock", StockSchema);
 
 app.get("/api/stocks/:stock", async (req, res) => {
-    const stock = req.params.stock;
+    try {
+        const stock = req.params.stock;
 
-    // Fetch the stock from MongoDB
-    let stockModel = await Stock.findOne({ name: stock });
+        // Fetch the stock from MongoDB
+        let stockModel = await Stock.findOne({ name: stock });
 
-    // If the stock does not exist, create it
-    if (!stockModel) {
-        const price = Math.random() * 100;
-        stockModel = new Stock({
-            name: stock,
-            price: price,
-        });
+        // If the stock does not exist, create it
+        if (!stockModel) {
+            const price = Math.random() * 100;
+            stockModel = new Stock({
+                name: stock,
+                price: price,
+            });
 
-        await stockModel.save();
+            await stockModel.save();
+        }
+
+        // Return the stock price
+        res.status(200).json({ price: stockModel.price });
+    } catch (error) {
+        res.status(400).json({ message: error.message })
     }
-
-    // Return the stock price
-    res.json({ price: stockModel.price });
 });
 
 app.listen(PORT, () => {
