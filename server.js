@@ -11,10 +11,17 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect('mongodb+srv://kartikkulshreshtha2507:kartikkulshreshtha@cluster0.rrwzcse.mongodb.net/stock_tracker', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose
+    .connect('mongodb+srv://kartikkulshreshtha2507:kartikkulshreshtha@cluster0.rrwzcse.mongodb.net/stock_tracker', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('Connected to MongoDB Atlas');
+    })
+    .catch((err) => {
+        console.error('MongoDB Atlas connection error:', err);
+    });
 
 const Schema = mongoose.Schema;
 
@@ -30,7 +37,7 @@ app.get("/api/stocks/:stock", async (req, res) => {
         const stock = req.params.stock;
 
         // Fetch the stock from MongoDB
-        let stockModel = await Stock.find({ name: stock });
+        let stockModel = await Stock.findOne({ name: stock });
 
         // If the stock does not exist, create it
         if (!stockModel) {
