@@ -23,14 +23,14 @@ const StockSchema = new Schema({
     price: Number,
 });
 
-const Stock = mongoose.model("Stock", StockSchema);
+const Stock = mongoose.model("stock", StockSchema);
 
 app.get("/api/stocks/:stock", async (req, res) => {
     try {
         const stock = req.params.stock;
 
         // Fetch the stock from MongoDB
-        let stockModel = await Stock.findOne({ name: stock });
+        let stockModel = await Stock.find({ name: stock });
 
         // If the stock does not exist, create it
         if (!stockModel) {
