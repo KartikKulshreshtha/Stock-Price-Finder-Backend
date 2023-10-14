@@ -31,6 +31,9 @@ const StockSchema = new Schema({
 });
 
 const Stock = mongoose.model("stock", StockSchema);
+app.get('/', async (req, res) => {
+    res.json({"Message": "Hiii"});
+})
 
 app.get("/api/stocks/:stock", async (req, res) => {
     try {
