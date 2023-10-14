@@ -19,7 +19,7 @@ mongoose
     .then(() => {
         console.log('Connected to MongoDB Atlas');
     })
-    .catch((err) => {
+    .catch((err) => { 
         console.error('MongoDB Atlas connection error:', err);
     });
 
